@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gabriel de Vasconcelos - Engenheiro de Software</title>
+  <meta name="description" content="Portfólio de Gabriel de Vasconcelos, Engenheiro de Software e Tech Lead. JavaScript, TypeScript, Python, React, Node.js e SQL.">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png">
+  <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem("lang"); } catch (e) {}
+      var lang = saved || ((navigator.language || "pt").toLowerCase().indexOf("pt") === 0 ? "pt" : "en");
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", lang === "pt" ? "pt-BR" : "en");
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f9fc;
+      --border: #e3e7ee;
+      --text: #161a21;
+      --muted: #5b6270;
+      --accent: #1f4fa3;
+      --accent-soft: #e8eef9;
+      --max: 900px;
+    }
+
+    html[data-lang="pt"] .en,
+    html[data-lang="en"] .pt { display: none !important; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, #eef1f5 1px, transparent 1px),
+        linear-gradient(to bottom, #eef1f5 1px, transparent 1px);
+      background-size: 28px 28px;
+      background-position: center top;
+      -webkit-mask-image: linear-gradient(to right, #000 0%, transparent 28%, transparent 72%, #000 100%);
+      mask-image: linear-gradient(to right, #000 0%, transparent 28%, transparent 72%, #000 100%);
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      gap: 16px;
+    }
+
+    .logo {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      transition: color .15s;
+    }
+
+    nav ul a:hover { color: var(--accent); }
+
+    .lang-switch {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+    }
+
+    .lang-switch button {
+      background: none;
+      border: 0;
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--muted);
+      font: inherit;
+    }
+
+    .lang-switch button[aria-pressed="true"] {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .hero {
+      padding: 96px 0 88px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero .tag {
+      font-family: "JetBrains Mono", monospace;
+      color: var(--accent);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 5.5vw, 3.2rem);
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .role { color: var(--accent); }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 540px;
+      font-size: 18px;
+    }
+
+    .photo {
+      width: 280px;
+      height: 280px;
+    }
+
+    .photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .photo.no-img img { visibility: hidden; }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color .15s, background .15s;
+    }
+
+    .btn:hover { border-color: var(--accent); }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn.primary:hover { background: #183f84; }
+
+    section { padding: 72px 0; border-top: 1px solid var(--border); }
+
+    h2 {
+      font-size: 13px;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 32px;
+    }
+
+    .about-grid { max-width: 680px; }
+
+    .about p + p { margin-top: 16px; }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+      list-style: none;
+    }
+
+    .skills li {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color .15s, transform .15s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card .num {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .card .num a { text-decoration: none; }
+    .card .num a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .card .num .arrow { font-size: 20px; vertical-align: 6px; margin-left: 2px; }
+
+    .status {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .card p { color: var(--muted); font-size: 15px; }
+
+    .card .where {
+      margin-top: 14px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    .gh-link {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .gh-link:hover { text-decoration: underline; }
+
+    .timeline { list-style: none; }
+
+    .timeline > li {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 24px;
+      padding: 22px 0;
+    }
+
+    .timeline > li + li { border-top: 1px dashed var(--border); }
+
+    .timeline .when {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 13px;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+
+    .timeline h3 { font-size: 17px; font-weight: 600; }
+    .timeline .org { color: var(--accent); font-weight: 500; font-size: 15px; }
+    .timeline .org a { text-decoration: none; }
+    .timeline .org a:hover { text-decoration: underline; }
+    .timeline .org .note { color: var(--muted); font-weight: 400; }
+
+    .timeline ul {
+      margin-top: 8px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .timeline ul li + li { margin-top: 4px; }
+
+    .edu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .edu .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+
+    .contact p { color: var(--muted); max-width: 520px; margin-bottom: 28px; }
+
+    .socials {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .socials a {
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+    }
+
+    .socials a:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer {
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 56px 0 64px; gap: 32px; }
+      .photo { width: 200px; height: 200px; order: -1; }
+      .cards, .edu { grid-template-columns: 1fr; gap: 32px; }
+      .cards, .edu { gap: 16px; }
+      .timeline > li { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="#" class="logo">gabrielvscode</a>
+        <div class="nav-right">
+          <ul>
+            <li><a href="#sobre"><span class="pt">Sobre</span><span class="en">About</span></a></li>
+            <li><a href="#projetos"><span class="pt">Projetos</span><span class="en">Projects</span></a></li>
+            <li><a href="#experiencia"><span class="pt">Experiência</span><span class="en">Experience</span></a></li>
+            <li><a href="#contato"><span class="pt">Contato</span><span class="en">Contact</span></a></li>
+          </ul>
+          <div class="lang-switch" role="group" aria-label="Idioma / Language">
+            <button type="button" data-set-lang="pt" aria-pressed="true">PT</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <div class="hero">
+      <div>
+        <p class="tag"><span class="pt">Olá, eu sou</span><span class="en">Hi, I'm</span></p>
+        <h1>Gabriel de Vasconcelos.<br><span class="role"><span class="pt">Engenheiro de Software.</span><span class="en">Software Engineer.</span></span></h1>
+        <div class="actions">
+          <a href="#experiencia" class="btn primary"><span class="pt">Ver experiência</span><span class="en">See experience</span></a>
+          <a href="https://github.com/gabrielvscodigos" class="btn" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/gabrielvscode" class="btn" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <div class="photo" id="photo">
+        <img src="./images/avatar.png" alt="Avatar - Gabriel de Vasconcelos" onerror="this.parentNode.classList.add('no-img')">
+      </div>
+    </div>
+
+    <section id="sobre" class="about">
+      <h2><span class="pt">Sobre</span><span class="en">About</span></h2>
+      <div class="about-grid">
+        <div>
+          <p class="pt">Sou Engenheiro de Software, formado em Ciência da Computação pela <a href="https://portal.ufcg.edu.br/" target="_blank" rel="noopener"><b>Universidade Federal de Campina Grande (UFCG)</b></a>. Hoje atuo como Tech Lead na WORKS, unindo desenvolvimento, arquitetura de soluções e liderança técnica.</p>
+          <p class="en">I'm a Software Engineer with a B.Sc. in Computer Science from the <a href="https://portal.ufcg.edu.br/" target="_blank" rel="noopener"><b>Federal University of Campina Grande (UFCG)</b></a>. I currently work as Tech Lead at WORKS, combining development, solution architecture and technical leadership.</p>
+
+          <p class="pt">Do levantamento de requisitos à arquitetura e à implementação. Trabalho principalmente com JavaScript e Python, além de TypeScript, React, Node.js e PostgreSQL, e tenho experiência com APIs, integração de sistemas e automação de processos. Gosto de construir soluções eficientes e preparadas para crescer.</p>
+          <p class="en">From gathering requirements to architecture and implementation. I mainly use JavaScript and Python, along with TypeScript, React, Node.js and PostgreSQL, and have experience with APIs, system integrations and process automation. I like building efficient and ready to grow solutions.</p>
+
+          <ul class="skills">
+            <li>JavaScript</li>
+            <li>TypeScript</li>
+            <li>React</li>
+            <li>Node.js</li>
+            <li>NestJS</li>
+            <li>Prisma</li>
+            <li>PostgreSQL</li>
+            <li>SQL Server</li>
+            <li>Python</li>
+            <li>Scrum</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos">
+      <h2><span class="pt">Projetos</span><span class="en">Projects</span></h2>
+      <div class="cards">
+        <article class="card">
+          <h3 class="num"><a href="https://github.com/gabrielvscodigos/tikket" target="_blank" rel="noopener">Tikket <span class="arrow">↗</span></a></h3>
+          <p>
+            <span class="pt">Sistema de ITSM para abrir, acompanhar e gerenciar chamados de suporte. Desenvolvido como meu Trabalho de Conclusão de Curso na UFCG.</span>
+            <span class="en">ITSM system for opening, tracking and managing support tickets. Built as my undergraduate thesis project at UFCG.</span>
+          </p>
+          <p class="where">NestJS · TypeScript · PostgreSQL</p>
+        </article>
+        <article class="card">
+          <h3 class="num"><a href="https://github.com/gabrielvscodigos/menu-assistant" target="_blank" rel="noopener">Menu Assistant <span class="arrow">↗</span></a></h3>
+          <p>
+            <span class="pt">Chatbot que tira as dúvidas dos clientes sobre o cardápio de um estabelecimento. Usa RAG para buscar as respostas no próprio cardápio.</span>
+            <span class="en">Chatbot that answers customer questions about a restaurant's menu. It uses RAG to find the answers in the menu itself.</span>
+          </p>
+          <p class="where">Python · RAG</p>
+        </article>
+        <article class="card">
+          <span class="status"><span class="pt">Em desenvolvimento</span><span class="en">In progress</span></span>
+          <h3 class="num"><span class="pt">ITSM Report</span><span class="en">ITSM Report</span></h3>
+          <p>
+            <span class="pt">Gerador de relatórios a partir de uma planilha Excel de chamados. Com os dados extraídos, uma IA analisa o desempenho e aponta insights.</span>
+            <span class="en">Turns an Excel spreadsheet of support tickets into a visual report. An AI then analyzes the extracted data and surfaces performance insights.</span>
+          </p>
+          <p class="where">Python · TypeScript · <span class="pt">IA</span><span class="en">AI</span></p>
+        </article>
+        <article class="card">
+          <span class="status"><span class="pt">Em desenvolvimento</span><span class="en">In progress</span></span>
+          <h3 class="num">Order Extractor</h3>
+          <p>
+            <span class="pt">Usa LLMs para transformar pedidos escritos em português informal, como “quero 2 x-burguer sem cebola e uma coca 2L”, em JSON estruturado com itens, quantidades, observações e endereço de entrega. Inclui um dataset sintético e avaliação de acerto por campo.</span>
+            <span class="en">Uses LLMs to turn food orders written in informal Portuguese, like “quero 2 x-burguer sem cebola e uma coca 2L”, into structured JSON with items, quantities, notes and delivery address. Includes a synthetic dataset and per-field accuracy evaluation.</span>
+          </p>
+          <p class="where">Python · Hugging Face · LLMs</p>
+        </article>
+      </div>
+      <a href="https://github.com/gabrielvscodigos" class="gh-link" target="_blank" rel="noopener">
+        <span class="pt">Ver meus repositórios no GitHub →</span>
+        <span class="en">See my repositories on GitHub →</span>
+      </a>
+    </section>
+
+    <section id="experiencia">
+      <h2><span class="pt">Experiência</span><span class="en">Experience</span></h2>
+      <ul class="timeline">
+
+        <li>
+          <span class="when"><span class="pt">mar 2026 - atual</span><span class="en">Mar 2026 - now</span></span>
+          <div>
+            <h3><span class="pt">Líder Técnico</span><span class="en">Tech Lead</span></h3>
+            <p class="org"><a href="https://gestaoworks.com/" target="_blank" rel="noopener noreferrer">WORKS – Inteligência em Gestão</a></p>
+            <ul class="pt">
+              <li>Liderança técnica, gestão de projetos e desenvolvimento de soluções corporativas.</li>
+              <li>Desenvolvo integrações e soluções customizadas na plataforma de ITSM Freshdesk, consumindo APIs com Python e TypeScript, em uma operação com mais de 10 mil chamados.</li>
+              <li>Apoio a implementação de uma aplicação web de matrícula de alunos, projetada para atender mais de 50 mil usuários.</li>
+            </ul>
+            <ul class="en">
+              <li>Technical leadership, project management and enterprise solution development.</li>
+              <li>Build integrations and custom solutions on the Freshdesk ITSM platform, consuming APIs with Python and TypeScript, in an operation handling 10,000+ tickets.</li>
+              <li>Support the implementation of a student enrollment web application designed to serve 50,000+ users.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <span class="when"><span class="pt">fev 2024 - fev 2026</span><span class="en">Feb 2024 - Feb 2026</span></span>
+          <div>
+            <h3><span class="pt">Analista de Sistemas Pleno</span><span class="en">Systems Analyst (Mid-level)</span></h3>
+            <p class="org"><a href="https://fiepb.com.br/" target="_blank" rel="noopener noreferrer">FIEPB – Federação das Indústrias do Estado da Paraíba</a></p>
+            <ul class="pt">
+              <li>Analista de Sistemas e DBA do ERP TOTVS RM, com foco nos módulos de RH (Folha, Ponto, Gestão de Pessoas e Saúde e Segurança Ocupacional), atendendo mais de 15 unidades no estado.</li>
+              <li>Reduzi de 40 para 7 os relatórios operacionais, reestruturando as consultas SQL.</li>
+              <li>Automatizei processos de ponta a ponta por meio de integrações com APIs REST, conectando múltiplos sistemas e otimizando fluxos operacionais.</li>
+              <li>Fui mentor de um estagiário, organizando o trabalho com Scrum.</li>
+            </ul>
+            <ul class="en">
+              <li>Systems Analyst and DBA for TOTVS RM ERP, focused on HR modules (Payroll, Time Tracking, People Management and Occupational Health &amp; Safety), serving 15+ units across the state.</li>
+              <li>Cut operational reports from 40 to 7 by restructuring SQL queries.</li>
+              <li>Automated end-to-end processes through REST API integrations, connecting multiple systems and optimizing operational workflows.</li>
+              <li>Mentored an intern, organizing the work with Scrum.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <span class="when"><span class="pt">set 2023 - fev 2024</span><span class="en">Sep 2023 - Feb 2024</span></span>
+          <div>
+            <h3><span class="pt">Desenvolvedor Full-Stack</span><span class="en">Full-Stack Developer</span></h3>
+            <p class="org"><a href="https://fiepb.com.br/iel" target="_blank" rel="noopener noreferrer">IEL – Instituto Euvaldo Lodi</a></p>
+            <ul class="pt">
+              <li>Modelei processos internos na plataforma BPMS (Zeev) com formulários em HTML, CSS, JavaScript, jQuery e Bootstrap.</li>
+              <li>Criei um formulário interno que padronizou as solicitações externas ao setor.</li>
+              <li>Implementei um Kanban em JavaScript puro, integrado à API do BPMS, para acompanhar o andamento dos processos em tempo real.</li>
+            </ul>
+            <ul class="en">
+              <li>Modeled internal processes on the Zeev BPMS platform, building forms with HTML, CSS, JavaScript, jQuery and Bootstrap.</li>
+              <li>Built an internal form that standardized external requests to the department.</li>
+              <li>Built a plain-JavaScript Kanban board integrated with the BPMS API to track process progress in real time.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <span class="when"><span class="pt">jul 2023 - abr 2024</span><span class="en">Jul 2023 - Apr 2024</span></span>
+          <div>
+            <h3><span class="pt">Monitor de Engenharia de Software</span><span class="en">Software Engineering Teaching Assistant</span></h3>
+            <p class="org"><a href="https://www.ufcg.edu.br/" target="_blank" rel="noopener noreferrer">UFCG – Universidade Federal de Campina Grande</a> <span class="note">· <span class="pt">Prof. Rohit Gheyi</span><span class="en">Prof. Rohit Gheyi</span></span></p>
+            <ul class="pt">
+              <li>Dei suporte aos alunos, presencial e remotamente, em UML, Scrum, XP, análise e testes de software.</li>
+              <li>Liderei a equipe de monitores no segundo período, padronizando e organizando as atividades do grupo.</li>
+            </ul>
+            <ul class="en">
+              <li>Supported students, in person and remotely, on UML, Scrum, XP, software analysis and testing.</li>
+              <li>Led the teaching assistant team in the second term, standardizing and organizing the group's work.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <span class="when"><span class="pt">dez 2022 - set 2023</span><span class="en">Dec 2022 - Sep 2023</span></span>
+          <div>
+            <h3><span class="pt">Diretor de Qualidade · Dev Full-Stack · QA</span><span class="en">Quality Director · Full-Stack Dev · QA</span></h3>
+            <p class="org"><a href="https://www.instagram.com/codexjr/" target="_blank" rel="noopener noreferrer">CodeX Jr. <span class="pt">(Empresa Júnior)</span><span class="en">(Junior Enterprise)</span></a></p>
+            <ul class="pt">
+              <li>Como Diretor de Qualidade, reestruturei a diretoria, criei guias de padronização e uma trilha de capacitação em QA.</li>
+              <li>Como dev Full-Stack, desenvolvi interfaces responsivas com React e TypeScript em dois projetos internos.</li>
+              <li>Como QA, atuei também como Scrum Master: conduzi dailies e retrospectivas, defini metas de sprint e mantive o backlog.</li>
+            </ul>
+            <ul class="en">
+              <li>As Quality Director, restructured the department and created standardization guides and a QA training track.</li>
+              <li>As a Full-Stack dev, built responsive interfaces with React and TypeScript on two internal projects.</li>
+              <li>As QA, also served as Scrum Master: ran dailies and retrospectives, set sprint goals and kept the backlog up to date.</li>
+            </ul>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <section id="formacao">
+      <h2><span class="pt">Formação</span><span class="en">Education</span></h2>
+      <div class="edu">
+        <div class="card">
+          <h3><span class="pt">Bacharelado em Ciência da Computação</span><span class="en">B.Sc. in Computer Science</span></h3>
+          <p>Universidade Federal de Campina Grande (UFCG) · 2020 - 2025</p>
+        </div>
+        <div class="card">
+          <h3><span class="pt">Certificações</span><span class="en">Certifications</span></h3>
+          <p>Scrum Fundamentals Certified (SFC) · EF SET English (B2) · Santander Coders · <span class="pt">Framework de Serviços 2.0 (MIT TOTVS)</span><span class="en">Services Framework 2.0 (MIT TOTVS)</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="contact">
+      <h2><span class="pt">Contato</span><span class="en">Contact</span></h2>
+      <p>
+        <span class="pt">Aberto a conversas sobre oportunidades e projetos. O jeito mais rápido de falar comigo é pelo LinkedIn ou por e-mail.</span>
+        <span class="en">Open to conversations about opportunities and projects. The fastest way to reach me is LinkedIn or email.</span>
+      </p>
+      <ul class="socials">
+        <li><a href="mailto:gabrielvscode.dev@gmail.com">gabrielvscode.dev@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/gabrielvscode" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/gabrielvscodigos" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      © <span id="ano"></span> Gabriel de Vasconcelos
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var buttons = document.querySelectorAll("[data-set-lang]");
+
+      function setLang(lang) {
+        root.setAttribute("data-lang", lang);
+        root.setAttribute("lang", lang === "pt" ? "pt-BR" : "en");
+        document.title = lang === "pt"
+          ? "Gabriel de Vasconcelos - Engenheiro de Software"
+          : "Gabriel de Vasconcelos - Software Engineer";
+        buttons.forEach(function (b) {
+          b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === lang ? "true" : "false");
+        });
+        try { localStorage.setItem("lang", lang); } catch (e) {}
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+      });
+
+      setLang(root.getAttribute("data-lang") || "pt");
+      document.getElementById("ano").textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
