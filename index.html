@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gabriel de Vasconcelos - Engenheiro de Software</title>
   <meta name="description" content="Portfólio de Gabriel de Vasconcelos, Engenheiro de Software e Tech Lead. JavaScript, TypeScript, Python, React, Node.js e SQL.">
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png">
-  <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,6 +17,11 @@
       var lang = saved || ((navigator.language || "pt").toLowerCase().indexOf("pt") === 0 ? "pt" : "en");
       document.documentElement.setAttribute("data-lang", lang);
       document.documentElement.setAttribute("lang", lang === "pt" ? "pt-BR" : "en");
+
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (e) {}
+      if (!theme) theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", theme);
     })();
   </script>
   <style>
@@ -28,8 +33,30 @@
       --muted: #5b6270;
       --accent: #1f4fa3;
       --accent-soft: #e8eef9;
+      --accent-strong: #1f4fa3;
+      --accent-hover: #183f84;
+      --grid: #eef1f5;
+      --header-bg: rgba(255, 255, 255, 0.88);
       --max: 900px;
+      color-scheme: light;
     }
+
+    html[data-theme="dark"] {
+      --bg: #0f1217;
+      --surface: #161b22;
+      --border: #262d38;
+      --text: #e6e9ef;
+      --muted: #9aa3b2;
+      --accent: #8fb0f5;
+      --accent-soft: #1b2638;
+      --accent-strong: #3566c4;
+      --accent-hover: #4477d6;
+      --grid: #1a1f27;
+      --header-bg: rgba(15, 18, 23, 0.85);
+      color-scheme: dark;
+    }
+
+    html[data-theme="dark"] .photo img { filter: invert(1) brightness(0.92); }
 
     html[data-lang="pt"] .en,
     html[data-lang="en"] .pt { display: none !important; }
@@ -53,8 +80,8 @@
       z-index: -1;
       pointer-events: none;
       background-image:
-        linear-gradient(to right, #eef1f5 1px, transparent 1px),
-        linear-gradient(to bottom, #eef1f5 1px, transparent 1px);
+        linear-gradient(to right, var(--grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
       background-size: 28px 28px;
       background-position: center top;
       -webkit-mask-image: linear-gradient(to right, #000 0%, transparent 28%, transparent 72%, #000 100%);
@@ -72,7 +99,7 @@
     header {
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.88);
+      background: var(--header-bg);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
@@ -117,6 +144,31 @@
 
     nav ul a:hover { color: var(--accent); }
 
+    .toggles {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-toggle {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 30px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+
+    .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+    .theme-toggle svg { width: 16px; height: 16px; }
+    .theme-toggle .sun { display: none; }
+    html[data-theme="dark"] .theme-toggle .sun { display: block; }
+    html[data-theme="dark"] .theme-toggle .moon { display: none; }
+
     .lang-switch {
       display: flex;
       border: 1px solid var(--border);
@@ -136,7 +188,7 @@
     }
 
     .lang-switch button[aria-pressed="true"] {
-      background: var(--accent);
+      background: var(--accent-strong);
       color: #fff;
     }
 
@@ -207,12 +259,12 @@
     .btn:hover { border-color: var(--accent); }
 
     .btn.primary {
-      background: var(--accent);
+      background: var(--accent-strong);
       color: #fff;
-      border-color: var(--accent);
+      border-color: var(--accent-strong);
     }
 
-    .btn.primary:hover { background: #183f84; }
+    .btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
     section { padding: 72px 0; border-top: 1px solid var(--border); }
 
@@ -398,9 +450,15 @@
             <li><a href="#experiencia"><span class="pt">Experiência</span><span class="en">Experience</span></a></li>
             <li><a href="#contato"><span class="pt">Contato</span><span class="en">Contact</span></a></li>
           </ul>
-          <div class="lang-switch" role="group" aria-label="Idioma / Language">
-            <button type="button" data-set-lang="pt" aria-pressed="true">PT</button>
-            <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+          <div class="toggles">
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema / Toggle theme">
+              <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+              <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </button>
+            <div class="lang-switch" role="group" aria-label="Idioma / Language">
+              <button type="button" data-set-lang="pt" aria-pressed="true">PT</button>
+              <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+            </div>
           </div>
         </div>
       </nav>
@@ -420,7 +478,7 @@
         </div>
       </div>
       <div class="photo" id="photo">
-        <img src="./images/avatar.png" alt="Avatar - Gabriel de Vasconcelos" onerror="this.parentNode.classList.add('no-img')">
+        <img src="images/avatar.png" alt="Avatar - Gabriel de Vasconcelos" onerror="this.parentNode.classList.add('no-img')">
       </div>
     </div>
 
@@ -648,6 +706,12 @@
       });
 
       setLang(root.getAttribute("data-lang") || "pt");
+
+      document.getElementById("theme-toggle").addEventListener("click", function () {
+        var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("theme", next); } catch (e) {}
+      });
       document.getElementById("ano").textContent = new Date().getFullYear();
     })();
   </script>
